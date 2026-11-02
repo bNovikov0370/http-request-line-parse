@@ -33,3 +33,10 @@ seen case), the line will have more than three space-separated parts and the
 parse fails with `ParseErrorCode.NOT_THREE_PARTS`. This is intentional — there
 is no correct way to recover the boundary between method and target when the
 target is unencoded and contains spaces.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
